@@ -1,0 +1,29 @@
+<div id="profile-overview" ng-show="conf">
+  <div flex="100" layout-gt-sm="row" layout="column" >
+    <div flex="50">
+      <md-card  md-ink-ripple="" style="position: relative">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Submission Deadline</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+          <span class="md-subhead">{{conf.sub | date:'medium'}}</span>
+        </md-card-content>
+      </md-card>
+    </div>
+    <div flex="50">
+      <md-card class="md-hue-10" md-ink-ripple="" style="position: relative">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Review Deadline</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+          <span class="md-subhead">{{conf.rev | date:'medium'}}</span>
+        </md-card-content>
+      </md-card>
+    </div>
+  </div>
+</div>
+

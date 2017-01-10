@@ -1,0 +1,151 @@
+<div>
+  <md-content  layout-gt-sm="column" layout-padding="">
+    <md-tabs md-dynamic-height="" md-border-bottom="">
+      <md-tab label="Authors">
+        <md-content class="md-padding">
+          <div flex="" layout="row">
+            <md-list flex="">
+              <div  ng-repeat="user in users" ng-hide="user.roles.chair">
+                <md-list-item ng-click="isCollapsed = !isCollapsed" ng-class="{'selected': !isCollapsed}">
+                  <div class="md-list-item-text" layout="column">
+                    <h3>  {{user.username}} <small>  | submissions: {{user.submissions.length}}</small> </h3>
+                  </div>
+                </md-list-item>
+                <div uib-collapse="isCollapsed">
+                  <div class="well well-lg">
+                    <div><strong>Username : </strong>{{user.username}}</div>
+                    <div><strong>Email: </strong>{{user.email}}</div>
+                    <div><strong>Name : </strong><span>{{user.first_name}}</span> <span>{{user.last_name}}</span>
+                    </div>
+                    <div ng-if="user.address"> <strong>Address:</strong>
+                      {{user.address.street}},
+                      {{user.address.city}},
+                      {{user.address.State}},
+                      {{user.address.Country}},
+                      {{user.address.postal_code}}
+                    </div>
+                    <div ng-if="user.institution"><strong>Institution:</strong>
+                      {{user.institution.name}},
+                      {{user.institution.city}},
+                      {{user.institution.State}},
+                      {{user.institution.Country}}
+                    </div>
+                    <div ng-if="user.submissions.length>0"><strong>Submissions : </strong>
+                      <div ng-repeat="sub in user.submissions">
+                        <span>{{submissionsMap[sub._id]}}</span>
+                      </div>
+                    </div>
+                    <div ng-if="user.assigned_submissions.length>0"><strong>Assigned Submissions: </strong>
+                      <div ng-repeat="sub in user.assigned_submissions">
+                        <span>{{submissionsMap[sub]}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <md-divider ></md-divider>
+              </div>
+            </md-list>
+
+          </div>
+        </md-content>
+      </md-tab>
+      <md-tab label="Reviewers">
+        <md-content class="md-padding">
+          <md-list flex="">
+            <div  ng-repeat="reviewer in reviewers">
+              <md-list-item ng-click="isCollapsed = !isCollapsed" ng-class="{'selected': !isCollapsed}">
+                <div class="md-list-item-text" layout="column"> <h3>{{reviewer.username}} <small>{{reviewer.assigned_submissions.length}}</small> </h3> </div>
+              </md-list-item>
+              <div uib-collapse="isCollapsed">
+                <div class="well well-lg">
+                  <div><strong>Username: </strong>{{reviewer.username}}</div>
+                  <div><strong>Email: </strong>{{reviewer.email}}</div>
+                  <div>{{reviewer.title}} <span>{{reviewer.first_name}}</span>
+                    <span>{{reviewer.last_name}}</span>
+                  </div>
+                  <div ng-if="reviewer.address"><strong>Address:</strong>
+                    {{reviewer.address.street}},
+                    {{reviewer.address.city}},
+                    {{reviewer.address.State}},
+                    {{reviewer.address.Country}},
+                    {{reviewer.address.postal_code}}
+                  </div>
+                  <div ng-if="reviewer.institution"><strong>Institution:</strong>
+                    {{reviewer.institution.name}},
+                    {{reviewer.institution.city}},
+                    {{reviewer.institution.State}},
+                    {{reviewer.institution.Country}}
+                  </div>
+                  <div ng-if="reviewer.submissions.length>0"><strong>Submissions : </strong>
+                    <div ng-repeat="sub in reviewer.submissions">
+                      <span>{{submissionsMap[sub._id]}}</span>
+                    </div>
+                  </div>
+                  <div ng-if="reviewer.assigned_submissions.length>0"><strong>Assigned Submissions: </strong>
+                    <div ng-repeat="sub in reviewer.assigned_submissions">
+                      <span>{{submissionsMap[sub]}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <md-divider ></md-divider>
+            </div>
+          </md-list>
+        </md-content>
+      </md-tab>
+      <md-tab label="Submissions">
+        <md-content class="md-padding">
+          <md-list flex="">
+            <div  ng-repeat="sub in submissions">
+              <md-list-item ng-click="isCollapsed = !isCollapsed" ng-class="{'selected': !isCollapsed}">
+                <div class="md-list-item-text" layout="column"> <h2>{{sub.title}} <small>{{sub.status}}</small>  </h2></div>
+              </md-list-item>
+              <div uib-collapse="isCollapsed">
+                <div class="well well-lg">
+                  <div> <h3>Title:</h3> {{sub.title}}</div>
+                  <div> <h3>Keywords:</h3> <span ng-repeat="key in sub.keywords"> {{key}},</span></div>
+                  <div> <h3>Authors:</h3> <div ng-repeat="author in sub.authors"> {{author.email}} | {{author.first_name}} {{author.last_name}}</div></div>
+                  <div class="text-center ">
+                    <md-button  ng-if="sub.path" target="_self" ng-href="{{sub.path}}" download="{{sub.path}}" class="md-fab md-primary" aria-label="Comment">
+                      <md-tooltip md-direction="left"> Download Paper </md-tooltip>
+                    <span class="glyphicon glyphicon-download-alt">
+                    </span>
+                    </md-button>
+                    <md-button  ng-click="remove(sub,$index)" class=" md-fab md-warn" aria-label="Comment">
+                      <md-tooltip md-direction="right"> Remove Submission </md-tooltip>
+                    <span class="glyphicon glyphicon-remove">
+                    </span>
+                    </md-button>
+                  </div>
+                </div>
+              </div>
+              <md-divider ></md-divider>
+            </div>
+          </md-list>
+        </md-content>
+      </md-tab>
+      <md-tab label="Reviews">
+        <md-content class="md-padding">
+          <md-list flex="">
+            <div  ng-repeat="rev in reviews">
+              <md-list-item ng-click="isCollapsed = !isCollapsed" ng-class="{'selected': !isCollapsed}">
+                <div class="md-list-item-text" layout="column"> <h2>{{submissionsMap[rev.submission_id]}} <small>{{overallEvaluation[rev.overall_evaluation]}}</small>  </h2></div>
+              </md-list-item>
+              <div uib-collapse="isCollapsed">
+                <div class="well well-lg">
+                  <div> <h3>Detailed summary:</h3> {{rev.detailed_summary}}</div>
+                  <div> <h3>Major strong points:</h3> {{rev.major_strong_points}}</div>
+                  <div> <h3>Major weak points:</h3> {{rev.major_weak_points}}</div>
+                  <div> <h3>Review expertise:</h3> {{reviewerExpertise[rev.review_expertise]}}</div>
+                  <div> <h3>Overall evaluation:</h3> {{overallEvaluation[rev.overall_evaluation]}}</div>
+                  <div> <h3>Reviewer:</h3> {{reviewersMap[rev.reviewer_id]}}</div>
+                </div>
+              </div>
+              <md-divider ></md-divider>
+            </div>
+          </md-list>
+        </md-content>
+      </md-tab>
+    </md-tabs>
+  </md-content>
+</div>

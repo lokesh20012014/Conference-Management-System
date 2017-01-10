@@ -1,0 +1,58 @@
+
+<div  ng-controller="ReviewController" ng-init="getReview()" >
+    <md-card>
+        <md-content class="md-padding">
+            <h2>Paper details</h2>
+            <div> <span>Title:</span> {{sub.title}}</div>
+            <div> <span>Keywords:</span> <span ng-repeat="key in sub.keywords"> {{key}},</span></div>
+            <div> <span>Abstract:</span> {{sub.abstract}}</div>
+
+            <md-button  ng-if="sub.path" target="_self" ng-href="{{sub.path}}" download="{{sub.path}}" class="md-fab md-primary" aria-label="Comment">
+                <md-tooltip md-direction="left"> Download Paper </md-tooltip>
+                    <span class="glyphicon glyphicon-download-alt">
+                    </span>
+            </md-button>
+        </md-content>
+    </md-card>
+    <md-content layout-padding>
+        <h4>Review Submission</h4>
+        <md-input-container class="md-block">
+            <label>Reviewer Expertise</label>
+            <md-select ng-model="review.review_expertise">
+                <md-option ng-value="d.value" ng-repeat="d in reviewerExpertise">{{ d.label }}</md-option>
+            </md-select>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Overall Evaluation</label>
+            <md-select ng-model="review.overall_evaluation">
+                <md-option ng-value="d.value" ng-repeat="d in overallEvaluation">{{ d.label }}</md-option>
+            </md-select>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+            <label>Summary</label>
+            <textarea ng-model="review.summary" md-select-on-focus=""/>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+            <label>Major Strong Points</label>
+            <textarea ng-model="review.major_strong_points" md-select-on-focus=""/>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+            <label>Major Weak Points</label>
+            <textarea ng-model="review.major_weak_points" md-select-on-focus=""/>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+            <label>Detailed Summary</label>
+            <textarea ng-model="review.detailed_summary" md-select-on-focus=""/>
+        </md-input-container>
+        <md-input-container>
+            <label>Status</label>
+            <md-select ng-model="sub.status">
+                <md-option value="accepted"><em>Accept</em></md-option>
+                <md-option value="rejected"><em>Reject</em></md-option>
+            </md-select>
+        </md-input-container>
+        <md-button class="md-raised md-primary" ng-click="submitReview()">Submit Review</md-button>
+        <span ng-show="showSuccess">"review succesfully submitted"</span>
+    </md-content>
+</div>
+</div>

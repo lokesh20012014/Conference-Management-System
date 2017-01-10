@@ -1,0 +1,21 @@
+<md-sidenav  layout-fill flex class=" md-sidenav-left" md-component-id="left"  md-is-locked-open="$mdMedia('gt-md')"  md-whiteframe="4">
+
+    <md-toolbar  class="md-whiteframe-4dp">
+      <div class="md-toolbar-tools" ui-sref="root.dashboard" >
+        <md-button class="md-icon-button" aria-label="Settings" >
+          <i class="material-icons md-48">account_circle</i>
+        </md-button>
+        <h2>
+          <span ui-sref="root.dashboard" ng-bind="username"></span>
+        </h2>
+      </div>
+    </md-toolbar>
+    <md-content flex>
+      <md-list flex>
+        <md-list-item md-ink-ripple class="md-clickable" ng-repeat="item in sideMenu" ui-sref="{{item.state}}">
+          <h5 >{{item.label}}</h5>
+        </md-list-item>
+      </md-list>
+    </md-content>
+  </md-sidenav>
+

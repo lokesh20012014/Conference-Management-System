@@ -1,0 +1,54 @@
+<div ng-init="listSubmissions()">
+  <div>
+    <div>
+      <md-card class="md-padding" ng-init="isCollapsed=true">
+        <h3>List of Submissions</h3>
+        <md-list flex="">
+          <div  ng-repeat="sub in submission">
+            <md-list-item ng-click="isCollapsed = !isCollapsed" ng-class="{'selected': !isCollapsed}">
+              <div class="md-list-item-text" layout="column">
+                <h4>
+                  <span class="glyphicon glyphicon-chevron-right"></span>  {{sub.title}} | <small>{{sub.status}}</small>
+                </h4>
+              </div>
+            </md-list-item>
+            <div uib-collapse="isCollapsed">
+              <div class="well well-lg">
+                <div>Title: {{sub.title}}</div>
+                <div>Abstract: {{sub.abstract}}</div>
+                <div> <span>Keywords:</span> <span ng-repeat="key in sub.keywords"> {{key}},</span></div>
+                Authors:
+                <div ng-repeat="author in sub.authors">
+                   {{author.email}} | {{author.first_name}} {{author.last_name}}
+                </div>
+                <div class="text-center ">
+                  <md-button  ng-if="sub.path" target="_self" ng-href="{{sub.path}}" download="{{sub.path}}" class="md-fab md-primary" aria-label="Comment">
+                    <md-tooltip md-direction="left"> Download Paper </md-tooltip>
+                    <span class="glyphicon glyphicon-download-alt">
+                    </span>
+                  </md-button>
+                  <md-button ng-disabled="!subBtn" ui-sref="root.submission({submissionId:sub._id})" class=" md-fab md-primary" aria-label="Comment">
+                    <md-tooltip ng-if="subBtn" md-direction="right"> Edit Submission </md-tooltip>
+                    <md-tooltip ng-if="!subBtn" md-direction="right"> Submissions closed </md-tooltip>
+                    <span class="glyphicon glyphicon-pencil">
+                    </span>
+                  </md-button>
+                  <md-button ng-disabled="!subBtn"  ng-click="remove(sub,$index)" class=" md-fab md-primary" aria-label="Comment">
+                    <md-tooltip ng-if="subBtn" md-direction="right"> Remove Submission </md-tooltip>
+                    <md-tooltip ng-if="!subBtn" md-direction="right"> Submissions closed </md-tooltip>
+                    <span class="glyphicon glyphicon-remove">
+                    </span>
+                  </md-button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <md-button  ng-disabled="!subBtn"  class="md-raised md-primary" ui-sref="root.newsub">Add Submission
+            <md-tooltip ng-if="subBtn" md-direction="right"> Add new submission</md-tooltip>
+            <md-tooltip ng-if="!subBtn" md-direction="right"> Submissions are closed </md-tooltip>
+          </md-button>
+        </md-list>
+      </md-card>
+    </div>
+  </div>
+</div>

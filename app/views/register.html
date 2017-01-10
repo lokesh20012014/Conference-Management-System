@@ -1,0 +1,37 @@
+<div class="login-container" layout="row" layout-align="center center" layout-margin>
+  <md-card ng-show="!success" >
+    <md-toolbar>
+      <div class="md-toolbar-tools" layout-align="center center">
+        <h2>Register</h2>
+      </div>
+    </md-toolbar>
+    <md-content layout="column" class="input-icons" layout-margin layout-padding>
+      <md-input-container>
+        <md-icon md-svg-src="img/account.svg"></md-icon>
+        <input ng-model="user.username" placeholder="Username">
+      </md-input-container>
+      <md-input-container>
+        <md-icon md-svg-src="img/email.svg" class="email"></md-icon>
+        <input ng-model="user.email" type="email" placeholder="Email">
+      </md-input-container>
+      <md-input-container>
+        <md-icon md-svg-src="img/lock.svg" class="password"></md-icon>
+        <input ng-model="user.password" type="password" placeholder="Password">
+      </md-input-container>
+
+      <div class="red" ng-if="error" align="center"> <span >*{{error}}</span> </div>
+      <md-button class="md-raised md-primary" ng-disabled="validate(user)" ng-click="register()">Register</md-button>
+      <md-button class="md-raised " ui-sref="login"> <span>already a member? Login</span> </md-button>
+    </md-content>
+  </md-card>
+
+  <md-card  ng-show="success" flex="50">
+    <md-toolbar>
+      <div class="md-toolbar-tools" layout-align="center center">
+        <h2>
+          Registration Succesfull.. <a style="color:black" href="/login">login</a> to proceed
+        </h2>
+      </div>
+    </md-toolbar>
+  </md-card>
+</div>

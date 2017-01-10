@@ -1,0 +1,69 @@
+<div class="md-inline-form">
+  <md-content class="md-padding">
+    <form name="myForm">
+      <div>
+        <h4>Title</h4>
+        <md-input-container>
+          <label>Project Title</label>
+          <input ng-model="sub.title">
+        </md-input-container>
+      </div>
+      <div>
+        <md-input-container flex="50" layout-fill="">
+          <label>Authors</label>
+          <md-select ng-model="sub.authors"
+                     md-on-close="clearSearchTerm()"
+                     data-md-container-class="selectdemoSelectHeader"
+                     multiple>
+            <md-select-header class="demo-select-header">
+              <input ng-model="searchTerm"
+                     type="search"
+                     placeholder="Search for a author.."
+                     class="demo-header-searchbox md-text">
+            </md-select-header>
+            <md-optgroup label="authors">
+              <md-option ng-value="author" ng-repeat="author in users | filter:searchTerm">
+                {{author.email}} | {{author.first_name}} {{author.last_name}}
+              </md-option>
+            </md-optgroup>
+          </md-select>
+        </md-input-container>
+      </div>
+      <div class="chipsdemoBasicUsage">
+        <h4>Paper</h4>
+        <md-chips ng-model="keywords"
+                  placeholder="Enter a Keyword" delete-button-label="Remove Keyword"
+                  delete-hint="Press delete to remove Keyword" secondary-placeholder="+Keyword"></md-chips>
+      </div>
+      <div>
+        <md-input-container class="md-block">
+          <label>Abstract</label>
+          <textarea ng-model="sub.abstract" rows="5" md-select-on-focus=""></textarea>
+        </md-input-container>
+      </div>
+      <div>
+        <span>Update Paper:</span>
+        <md-button class="md-raised" type="file" ngf-select ng-model="subFile" name="file"
+                   accept="application/pdf*" ngf-max-size="20MB" required
+                   ngf-model-invalid="errorFile">Select File</md-button>
+        <span ng-if="subFile">{{subFile.name}}</span>
+        <span ng-if="!subFile">No file chosen</span>
+        <i ng-show="myForm.file.$error.maxSize">File too large
+          {{errorFile.size / 1000000|number:1}}MB: max 20M</i>
+        <md-button class="md-fab md-mini md-default" ng-click="subFile = null" ng-show="subFile">X</md-button>
+        <br><br>
+        <span ng-show="subFile.result">Upload Successful</span>
+        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+        {{errorMsg}}
+      </div>
+      <div layout-gt-sm="column">
+        <div>
+          <md-button class="md-raised md-primary" ng-click="submit(sub)">Submit</md-button>
+        </div>
+        <div ng-show="success">
+          <p>Submission Successful!</p>
+        </div>
+      </div>
+    </form>
+  </md-content>
+</div>
